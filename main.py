@@ -24,7 +24,7 @@ class User(db.Model):
 class Review(db.Model):
     __tablename__ = 'reviews'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.Text())
+    title = db.Column(db.String(100), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     body = db.Column(db.Text())
     date_created = db.Column(db.Date())
@@ -40,19 +40,22 @@ class Comment(db.Model):
 class Game(db.Model):
     __tablename__ = 'games'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
-    genre = db.Column(db.String)
+    title = db.Column(db.String(100), nullable=False)
+    genre = db.Column(db.String(100))
     description = db.Column(db.Text())
     platform = db.Column(db.String)
 
+# Create Tables 
 @app.cli.command('create')
 def create_db():
     db.drop_all()
     db.create_all()
     print("created tables")
 
+# Seed Tables
 @app.cli.command('seed')
 def seed_db():
+    #Seed Users
     users = [
         User(
             name = 'Adam Minister',
@@ -71,23 +74,18 @@ def seed_db():
     db.session.add_all(users)
     db.session.commit()
 
-
+    #Seed Reviews
     reviews = [
         Review(
             title = 'FromSoftware\'s latest masterpiece',
             rating = 5,
-            body = 'FromSoftware has created a new open world project.\
-             the game is a sprawling expansive experience with many things to do\
-             and all of it is of the highest quality in gaming',
+            body = 'the game is awesome, I loved it!',
             date_created = date.today(),
         ),
         Review(
             title = 'RE4 leaves a lot to be desired',
             rating = 3,
-            body = 'The latest remake from capcom, this time for they have\
-                 remastered their classic horror experience, resident evil 4.\
-                 unfortunately however, they haven\'t been able to gracefully,\
-                 update the game to a modern gaming landscape.',
+            body = 'Its okay, not amazing',
             date_created = date.today(),
         ),
     ]
@@ -95,7 +93,7 @@ def seed_db():
     db.session.add_all(reviews)
     db.session.commit()
 
-
+    #Seed Comments
     comments = [
         Comment(
         body = 'I agree, elden ring is a fantastic game',
@@ -110,7 +108,7 @@ def seed_db():
     db.session.add_all(comments)
     db.session.commit()
 
-
+    #Seed Games
     games = [
         Game(
             title = 'Resident Evil 4 Remake',
@@ -129,11 +127,20 @@ def seed_db():
     db.session.add_all(games)
     db.session.commit()
     
-
     print('tables seeded') 
 
+
+@app.route('/games')
+def all_games():
+    stmt = db.select(Game).order_by(Game.title)
+    games = db.session.scalars(stmt).all()
+    return games.json()
 
 @app.route('/hello')
 def hello():
     return 'lol'
+
+@app.route('/games')
+def games():
+    stmt = db.select(Card)
 
