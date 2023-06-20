@@ -47,17 +47,36 @@ class Game(db.Model):
 
 @app.cli.command('create')
 def create_db():
+    db.drop_all()
     db.create_all()
     print("created tables")
 
+@app.cli.command('seed')
+def seed_db():
+    games = [
+    Game(
+        title = 'Resident Evil 4 Remake',
+        genre = 'Action/Horror',
+        description = 'Survive monsters and horrors, and stop an evil plot',
+        platform = 'Playstation, Xbox, PC'
+    ),
+    Game(
+        title = 'Elden Ring',
+        genre = 'RPG',
+        description = 'Explore an open world, become Elden Lord and unite the Elden Ring!',
+        platform = 'Playstation, Xbox, PC'
+    ),
+    ]
+    
+    db.session.query(Game).delete()
+    db.session.add_all(games)
+    db.session.commit()
 
+
+    print('tables seeded') 
 
 
 @app.route('/hello')
 def hello():
     return 'lol'
-
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
 
