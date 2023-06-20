@@ -70,6 +70,8 @@ def seed_db():
     db.session.query(User).delete()
     db.session.add_all(users)
     db.session.commit()
+
+
     reviews = [
         Review(
             title = 'FromSoftware\'s latest masterpiece',
@@ -93,7 +95,22 @@ def seed_db():
     db.session.add_all(reviews)
     db.session.commit()
 
-    
+
+    comments = [
+        Comment(
+        body = 'I agree, elden ring is a fantastic game',
+        date_created = date.today(),
+        ),
+        Comment(
+        body = 'I disagree, I think RE4 is a fantastic modern remake',
+        date_created = date.today(),
+        )
+    ]
+    db.session.query(Comment).delete()
+    db.session.add_all(comments)
+    db.session.commit()
+
+
     games = [
         Game(
             title = 'Resident Evil 4 Remake',
