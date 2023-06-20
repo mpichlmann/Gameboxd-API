@@ -24,8 +24,8 @@ class User(db.Model):
 class Review(db.Model):
     __tablename__ = 'reviews'
     id = db.Column(db.Integer, primary_key=True)
-    rating = db.Column(db.Integer, nullable=False)
     title = db.Column(db.Text())
+    rating = db.Column(db.Integer, nullable=False)
     body = db.Column(db.Text())
     date_created = db.Column(db.Date())
 
@@ -53,25 +53,65 @@ def create_db():
 
 @app.cli.command('seed')
 def seed_db():
-    games = [
-    Game(
-        title = 'Resident Evil 4 Remake',
-        genre = 'Action/Horror',
-        description = 'Survive monsters and horrors, and stop an evil plot',
-        platform = 'Playstation, Xbox, PC'
-    ),
-    Game(
-        title = 'Elden Ring',
-        genre = 'RPG',
-        description = 'Explore an open world, become Elden Lord and unite the Elden Ring!',
-        platform = 'Playstation, Xbox, PC'
-    ),
+    users = [
+        User(
+            name = 'Adam Minister',
+            email = 'admin@gameboxd.com',
+            password = 'password123',
+            is_admin = True
+        ),
+        User(
+            name = 'John Doe',
+            email = 'johndoe@test.com',
+            password = 'testpass123',
+            is_admin = False
+        ),
     ]
+    db.session.query(User).delete()
+    db.session.add_all(users)
+    db.session.commit()
+    reviews = [
+        Review(
+            title = 'FromSoftware\'s latest masterpiece',
+            rating = 5,
+            body = 'FromSoftware has created a new open world project.\
+             the game is a sprawling expansive experience with many things to do\
+             and all of it is of the highest quality in gaming',
+            date_created = date.today(),
+        ),
+        Review(
+            title = 'RE4 leaves a lot to be desired',
+            rating = 3,
+            body = 'The latest remake from capcom, this time for they have\
+                 remastered their classic horror experience, resident evil 4.\
+                 unfortunately however, they haven\'t been able to gracefully,\
+                 update the game to a modern gaming landscape.',
+            date_created = date.today(),
+        ),
+    ]
+    db.session.query(Review).delete()
+    db.session.add_all(reviews)
+    db.session.commit()
+
     
+    games = [
+        Game(
+            title = 'Resident Evil 4 Remake',
+            genre = 'Action/Horror',
+            description = 'Survive monsters and horrors, and stop an evil plot',
+            platform = 'Playstation, Xbox, PC'
+        ),
+        Game(
+            title = 'Elden Ring',
+            genre = 'RPG',
+            description = 'Explore an open world, become Elden Lord and unite the Elden Ring!',
+            platform = 'Playstation, Xbox, PC'
+        ),
+    ]
     db.session.query(Game).delete()
     db.session.add_all(games)
     db.session.commit()
-
+    
 
     print('tables seeded') 
 
