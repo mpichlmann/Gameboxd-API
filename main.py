@@ -134,11 +134,12 @@ def seed_db():
 def all_games():
     stmt = db.select(Game).order_by(Game.title)
     games = db.session.scalars(stmt).all()
-    return games.json()
+    return games
 
-@app.route('/hello')
+
+@app.route('/')
 def hello():
-    return 'lol'
+    return 'HELLO WORLD'
 
 @app.route('/games')
 def games():
