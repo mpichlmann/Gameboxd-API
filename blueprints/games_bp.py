@@ -1,6 +1,6 @@
 from init import db
 from flask import Blueprint
-from models.games import Game, GameSchema
+from models.game import Game, GameSchema
 
 games_bp = Blueprint('games', __name__, url_prefix='/games')
 

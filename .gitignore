@@ -2,3 +2,5 @@
 __pycache__
 .env
 test.py
+.vscode
+.DS_Store

@@ -2,15 +2,17 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
-from dotenv import load_dotenv
 from datetime import date
 from flask_marshmallow import Marshmallow
 from blueprints.cli_bp import cli_bp
 from blueprints.games_bp import games_bp
+from blueprints.reviews_bp import reviews_bp
+from blueprints.users_bp import users_bp
+from blueprints.comments_bp import comments_bp
 from init import db, ma
 
 
-load_dotenv()
+
 
 # Configuration and Instances 
 def setup():
@@ -23,7 +25,11 @@ def setup():
     ma.init_app(app)
 
     app.register_blueprint(cli_bp)
+
     app.register_blueprint(games_bp)
+    app.register_blueprint(reviews_bp)
+    app.register_blueprint(comments_bp)
+    app.register_blueprint(users_bp)
 
     @app.route('/')
     def hello():

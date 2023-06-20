@@ -1,9 +1,9 @@
 from flask import Blueprint
 from datetime import date
-from models.comments import Comment
-from models.users import User
-from models.games import Game
-from models.reviews import Review
+from models.comment import Comment
+from models.user import User
+from models.game import Game
+from models.review import Review
 from init import db
 
 
