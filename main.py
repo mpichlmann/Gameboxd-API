@@ -14,9 +14,7 @@ db = SQLAlchemy(app)
 # USER MODEL 
 class User(db.Model):
     __tablename__ = 'users'
-
     id = db.Column(db.Integer, primary_key=True)
-
     name = db.Column(db.String)
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
@@ -24,16 +22,34 @@ class User(db.Model):
 
 # REVIEW MODEL 
 class Review(db.Model):
-    __tablename__='reviews'
-
+    __tablename__ = 'reviews'
     id = db.Column(db.Integer, primary_key=True)
-
     rating = db.Column(db.Integer, nullable=False)
     title = db.Column(db.Text())
     body = db.Column(db.Text())
     date_created = db.Column(db.Date())
 
-db.create_all()
+# COMMENT MODEL 
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text())
+    date_created = db.Column(db.Date())
+
+# GAMES MODEL
+class Game(db.Model):
+    __tablename__ = 'games'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    genre = db.Column(db.String)
+    description = db.Column(db.Text())
+    platform = db.Column(db.String)
+
+@app.cli.command('create')
+def create_db():
+    db.create_all()
+    print("created tables")
+
 
 
 
@@ -42,6 +58,6 @@ def hello():
     return 'lol'
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
 
