@@ -22,13 +22,13 @@ def seed_db():
         User(
             name = 'Adam Minister',
             email = 'admin@gameboxd.com',
-            password = bcrypt.generate_password_hash('password123'),
+            password = bcrypt.generate_password_hash('password123').decode('utf-8'),
             is_admin = True
         ),
         User(
             name = 'Jay Son',
             email = 'jayson@test.com',
-            password = bcrypt.generate_password_hash('testpass123')
+            password = bcrypt.generate_password_hash('testpass123').decode('utf-8')
         ),
     ]
     db.session.query(User).delete()
