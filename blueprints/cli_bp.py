@@ -4,7 +4,7 @@ from models.comment import Comment
 from models.user import User
 from models.game import Game
 from models.review import Review
-from init import db
+from init import db, bcrypt
 
 
 cli_bp = Blueprint('db', __name__)
@@ -22,14 +22,13 @@ def seed_db():
         User(
             name = 'Adam Minister',
             email = 'admin@gameboxd.com',
-            password = 'password123',
+            password = bcrypt.generate_password_hash('password123'),
             is_admin = True
         ),
         User(
-            name = 'John Doe',
-            email = 'johndoe@test.com',
-            password = 'testpass123',
-            is_admin = False
+            name = 'Jay Son',
+            email = 'jayson@test.com',
+            password = bcrypt.generate_password_hash('testpass123')
         ),
     ]
     db.session.query(User).delete()

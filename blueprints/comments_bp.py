@@ -6,7 +6,7 @@ comments_bp = Blueprint('comments', __name__, url_prefix='/comments')
 
 
 @comments_bp.route('/')
-def all_reviews():
+def all_comments():
     stmt = db.select(Comment).order_by(Comment.id)
     games = db.session.scalars(stmt).all()
     return CommentSchema(many=True).dump(games)

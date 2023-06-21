@@ -6,7 +6,7 @@ users_bp = Blueprint('users', __name__, url_prefix='/users')
 
 
 @users_bp.route('/')
-def all_reviews():
+def all_users():
     stmt = db.select(User).order_by(User.id)
     games = db.session.scalars(stmt).all()
     return UserSchema(many=True).dump(games)

@@ -9,7 +9,7 @@ from blueprints.games_bp import games_bp
 from blueprints.reviews_bp import reviews_bp
 from blueprints.users_bp import users_bp
 from blueprints.comments_bp import comments_bp
-from init import db, ma
+from init import db, ma, bcrypt
 
 
 
@@ -23,6 +23,7 @@ def setup():
 
     db.init_app(app)
     ma.init_app(app)
+    bcrypt.init_app(app)
 
     app.register_blueprint(cli_bp)
 

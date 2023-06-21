@@ -2,5 +2,7 @@
 Flask
 SQLAlchemy
 psycopg2
+marshmallow
+Bcrypt
 
 
