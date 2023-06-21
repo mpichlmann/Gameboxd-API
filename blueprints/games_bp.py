@@ -3,6 +3,7 @@ from flask import Blueprint, request
 from models.game import Game, GameSchema
 from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import IntegrityError
+from blueprints.auth_bp import admin_required
 
 games_bp = Blueprint('games', __name__, url_prefix='/games')
 
@@ -15,8 +16,10 @@ def all_games():
     return GameSchema(many=True).dump(games)
 
 
-@games_bp.route('/addgame', methods=['POST'])
+@games_bp.route('/add', methods=['POST'])
+@jwt_required()
 def add_game():
+    admin_required()
     try:
         game_info = GameSchema().load(request.json)
         game = Game(
@@ -31,4 +34,4 @@ def add_game():
     except IntegrityError:
         return {'error': 'Game already exists'}, 409
     except KeyError:
-        return {'error':'please provide all details of the game'}, 400
+        return {'error':'Missing key details of game'}, 400
