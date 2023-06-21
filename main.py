@@ -1,9 +1,6 @@
 # Web Server API 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from os import environ
-from datetime import date
-from flask_marshmallow import Marshmallow
 from blueprints.cli_bp import cli_bp
 from blueprints.auth_bp import auth_bp
 from blueprints.games_bp import games_bp
@@ -12,14 +9,10 @@ from blueprints.users_bp import users_bp
 from blueprints.comments_bp import comments_bp
 from init import db, ma, bcrypt, jwt
 
-
-
-
 # Configuration and Instances 
 def setup():
     app = Flask(__name__)
 
-    
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URI')
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')
 

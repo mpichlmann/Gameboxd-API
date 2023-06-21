@@ -12,4 +12,3 @@ class Game(db.Model):
 class GameSchema(ma.Schema):
     class Meta:
         fields = ('id', 'title', 'genre', 'description', 'platforms')
-        ordered = True

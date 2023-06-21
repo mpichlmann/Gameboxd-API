@@ -17,6 +17,26 @@ def create_db():
 
 @cli_bp.cli.command('seed')
 def seed_db():
+
+    #Seed Games
+    games = [
+        Game(
+            title = 'Resident Evil 4 Remake',
+            genre = 'Horror',
+            description = 'Survive monsters and horrors, and stop an evil plot',
+            platforms = 'Playstation, Xbox, PC'
+        ),
+        Game(
+            title = 'Elden Ring',
+            genre = 'RPG',
+            description = 'Explore an open world, become Elden Lord and unite the Elden Ring!',
+            platforms = 'Playstation, Xbox, PC'
+        ),
+    ]
+    db.session.query(Game).delete()
+    db.session.add_all(games)
+    db.session.commit()
+
     #Seed Users
     users = [
         User(
@@ -41,13 +61,15 @@ def seed_db():
             title = 'FromSoftwares latest masterpiece',
             rating = 5,
             body = 'the game is awesome, I loved it! Incredible world design and combat encounters',
-            date_created = date.today(),
+            date_created = date.today()
+            
         ),
         Review(
             title = 'RE4 leaves a lot to be desired',
             rating = 3,
             body = 'Its okay, not amazing, not awful. The gameplay is a little dated',
-            date_created = date.today(),
+            date_created = date.today()
+            
         ),
     ]
     db.session.query(Review).delete()
@@ -69,23 +91,6 @@ def seed_db():
     db.session.add_all(comments)
     db.session.commit()
 
-    #Seed Games
-    games = [
-        Game(
-            title = 'Resident Evil 4 Remake',
-            genre = 'Horror',
-            description = 'Survive monsters and horrors, and stop an evil plot',
-            platforms = 'Playstation, Xbox, PC'
-        ),
-        Game(
-            title = 'Elden Ring',
-            genre = 'RPG',
-            description = 'Explore an open world, become Elden Lord and unite the Elden Ring!',
-            platforms = 'Playstation, Xbox, PC'
-        ),
-    ]
-    db.session.query(Game).delete()
-    db.session.add_all(games)
-    db.session.commit()
+    
     
     print('tables seeded')

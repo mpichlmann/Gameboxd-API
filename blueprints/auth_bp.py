@@ -1,4 +1,4 @@
-from flask import Blueprint, request, abort, jsonify
+from flask import Blueprint, request, abort
 from models.user import User, UserSchema
 from init import bcrypt, db
 from sqlalchemy.exc import IntegrityError

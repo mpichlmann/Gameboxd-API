@@ -1,8 +1,9 @@
 from init import db
 from flask import Blueprint, request
 from models.review import Review, ReviewSchema
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import IntegrityError
+from datetime import date
 
 reviews_bp = Blueprint('reviews', __name__, url_prefix='/reviews')
 
@@ -15,17 +16,19 @@ def all_reviews():
 
 @reviews_bp.route('/add', methods=['POST'])
 @jwt_required()
-def add_review():
+def add_game():
     try:
-        review_info = ReviewSchema().load(request.json, partial=True)
+        review_info = ReviewSchema().load(request.json)
         review = Review(
             title=review_info['title'],
             rating=review_info['rating'],
             body=review_info['body'],
-            user_id=get_jwt_identity()
+            date_created=date.today()
         )
         db.session.add(review)
         db.session.commit()
         return ReviewSchema().dump(review), 201
+    except IntegrityError:
+        return {'error': 'Review already exists'}, 409
     except KeyError:
-        return {'error':'Missing key details of review'}, 400
+        return {'error':'please provide all details of the review'}, 400

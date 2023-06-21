@@ -1,4 +1,4 @@
-from init import db, bcrypt
+from init import db
 from flask import Blueprint, request
 from models.game import Game, GameSchema
 from flask_jwt_extended import jwt_required
@@ -16,8 +16,7 @@ def all_games():
     return GameSchema(many=True).dump(games)
 
 
-@games_bp.route('/add', methods=['POST'])
-@jwt_required()
+@games_bp.route('/addgame', methods=['POST'])
 def add_game():
     admin_required()
     try:
@@ -34,4 +33,4 @@ def add_game():
     except IntegrityError:
         return {'error': 'Game already exists'}, 409
     except KeyError:
-        return {'error':'Missing key details of game'}, 400
+        return {'error':'please provide all details of the game'}, 400
