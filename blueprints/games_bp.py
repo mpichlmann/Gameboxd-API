@@ -53,3 +53,16 @@ def update_game(game_id):
     else: 
         return {'error': 'review not found'}, 404
     
+# Delete a game
+@games_bp.route('/<int:game_id>', methods=['DELETE'])
+@jwt_required()
+def delete_game(game_id):
+    stmt = db.select(Game).filter_by(id=game_id)
+    game = db.session.scalar(stmt)
+    if game:
+        admin_required()
+        db.session.delete(game)
+        db.session.commit()
+        return {}, 200
+    else: 
+        return {'error': 'review not found'}, 404
