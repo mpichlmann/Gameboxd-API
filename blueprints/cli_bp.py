@@ -61,14 +61,16 @@ def seed_db():
             title = 'FromSoftwares latest masterpiece',
             rating = 5,
             body = 'the game is awesome, I loved it! Incredible world design and combat encounters',
-            date_created = date.today()
+            date_created = date.today(),
+            user_id = users[0].id
             
         ),
         Review(
             title = 'RE4 leaves a lot to be desired',
             rating = 3,
             body = 'Its okay, not amazing, not awful. The gameplay is a little dated',
-            date_created = date.today()
+            date_created = date.today(),
+            user_id = users[1].id
             
         ),
     ]
