@@ -50,6 +50,12 @@ def seed_db():
             email = 'jayson@test.com',
             password = bcrypt.generate_password_hash('testpass123').decode('utf-8')
         ),
+        User(
+            name = 'Queen Boo',
+            email = 'queenboo@mansion.com',
+            password = bcrypt.generate_password_hash('scaryboo').decode('utf-8'),
+            is_admin = True,
+        )
     ]
     db.session.query(User).delete()
     db.session.add_all(users)

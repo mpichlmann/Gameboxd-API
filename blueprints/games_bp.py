@@ -9,7 +9,6 @@ games_bp = Blueprint('games', __name__, url_prefix='/games')
 
 
 @games_bp.route('/')
-@jwt_required()
 def all_games():
     stmt = db.select(Game).order_by(Game.id)
     games = db.session.scalars(stmt).all()
@@ -17,6 +16,7 @@ def all_games():
 
 
 @games_bp.route('/addgame', methods=['POST'])
+@jwt_required()
 def add_game():
     admin_required()
     try:

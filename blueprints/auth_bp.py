@@ -44,3 +44,12 @@ def admin_required():
     response = jsonify({'error':'you must be an admin'})
     response.status_code = 401
     abort(response)
+
+def admin_or_owner_required(owner_id):
+  user_id = get_jwt_identity()
+  stmt = db.select(User).filter_by(id=user_id)
+  user = db.session.scalar(stmt)
+  if not (user and (user.is_admin or user_id == owner_id)):
+    response = jsonify({'error':'you must be an admin'})
+    response.status_code = 401
+    abort(response)
