@@ -1,7 +1,7 @@
 from init import db
 from flask import Blueprint, request
 from models.review import Review, ReviewSchema
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from datetime import date
 
@@ -16,14 +16,16 @@ def all_reviews():
 
 @reviews_bp.route('/add', methods=['POST'])
 @jwt_required()
-def add_game():
+def add_review():
     try:
         review_info = ReviewSchema().load(request.json)
         review = Review(
             title=review_info['title'],
             rating=review_info['rating'],
             body=review_info['body'],
-            date_created=date.today()
+            date_created=date.today(),
+            user_id = get_jwt_identity(),
+            game_id = review_info['game_id']
         )
         db.session.add(review)
         db.session.commit()

@@ -10,9 +10,10 @@ class Review(db.Model):
     date_created = db.Column(db.Date())
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
 
     
 
 class ReviewSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'title', 'rating', 'body', 'date_created', 'user_id')
+        fields = ('id', 'title', 'rating', 'body', 'date_created', 'user_id', 'game_id')
