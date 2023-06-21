@@ -18,7 +18,7 @@ def all_reviews():
 #Get all Reviews for a specific game
 
 # Add a review
-@reviews_bp.route('/add', methods=['POST'])
+@reviews_bp.route('/', methods=['POST'])
 @jwt_required()
 def add_review():
     try:
@@ -42,7 +42,7 @@ def add_review():
 # Update a review
 @reviews_bp.route('/<int:review_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
-def update_card(review_id):
+def update_game(review_id):
     stmt = db.select(Review).filter_by(id=review_id)
     review = db.session.scalar(stmt)
     review_info = ReviewSchema().load(request.json)
@@ -59,7 +59,7 @@ def update_card(review_id):
 # Delete a review 
 @reviews_bp.route('/<int:review_id>', methods=['DELETE'])
 @jwt_required()
-def delete_card(review_id):
+def delete_review(review_id):
     stmt = db.select(Review).filter_by(id=review_id)
     review = db.session.scalar(stmt)
     if review:

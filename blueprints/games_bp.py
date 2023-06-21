@@ -7,15 +7,15 @@ from blueprints.auth_bp import admin_required
 
 games_bp = Blueprint('games', __name__, url_prefix='/games')
 
-
-@games_bp.route('/')
+# Retrives all games 
+@games_bp.route('/', methods=['GET'])
 def all_games():
     stmt = db.select(Game).order_by(Game.id)
     games = db.session.scalars(stmt).all()
     return GameSchema(many=True).dump(games)
 
-
-@games_bp.route('/addgame', methods=['POST'])
+# Adds a new game for reviewing - only admins can do this
+@games_bp.route('/', methods=['POST'])
 @jwt_required()
 def add_game():
     admin_required()
@@ -34,3 +34,22 @@ def add_game():
         return {'error': 'Game already exists'}, 409
     except KeyError:
         return {'error':'please provide all details of the game'}, 400
+    
+# Updates a game - A game may be added to new platforms some time after release
+@games_bp.route('/<int:game_id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_game(game_id):
+    stmt = db.select(Game).filter_by(id=game_id)
+    game = db.session.scalar(stmt)
+    game_info = GameSchema().load(request.json)
+    if game:
+        admin_required()
+        game.title = game_info.get('title', game.title),
+        game.genre = game_info.get('genre', game.genre),
+        game.description = game_info.get('description', game.description),
+        game.platforms = game_info.get('platforms', game.platforms)
+        db.session.commit()
+        return GameSchema().dump(game)
+    else: 
+        return {'error': 'review not found'}, 404
+    
