@@ -44,7 +44,17 @@ def make_admin(user_id):
         return {'error': 'User not found'}, 404
 
 # Delete a user
-@users_bp
+@users_bp.route('/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        admin_required()
+        db.session.delete(user)
+        db.session.commit()
+        return {'message': 'User deleted successfully'}
+    else:
+        return {'error': 'User not found'}
 
 
 

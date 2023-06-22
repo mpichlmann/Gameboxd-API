@@ -8,10 +8,10 @@ class Comment(db.Model):
     body = db.Column(db.Text(), nullable=False)
     date_created = db.Column(db.Date())
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id', ondelete='CASCADE'), nullable=False)
 
-    review = db.relationship('Review', back_populates='comments')
+    review = db.relationship('Review', back_populates='comments', cascade='all, delete')
 
 class CommentSchema(ma.Schema):
     review = fields.Nested('ReviewSchema', only=['title'])

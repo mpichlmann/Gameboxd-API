@@ -10,10 +10,10 @@ class Review(db.Model):
     body = db.Column(db.Text())
     date_created = db.Column(db.Date())
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('games.id', ondelete='CASCADE'), nullable=False)
 
-    user = db.relationship('User', back_populates='reviews')
+    user = db.relationship('User', back_populates='reviews', cascade='all, delete')
 
     comments = db.relationship('Comment', back_populates='review', cascade='all, delete')
 
