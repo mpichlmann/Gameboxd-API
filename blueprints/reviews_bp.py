@@ -82,6 +82,6 @@ def delete_review(review_id):
         admin_or_owner_required(review.user_id)
         db.session.delete(review)
         db.session.commit()
-        return {}, 200
+        return {'message':'Review deleted'}, 200
     else: 
         return {'error': 'review not found'}, 404

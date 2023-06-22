@@ -17,6 +17,8 @@ def all_comments():
     return CommentSchema(many=True).dump(games)
 
 # Retrieve all comments by a specifc user
+@comments_bp.route('/user/<int:user_id>')
+
 
 # Retrieve all comments for a specific review 
 @comments_bp.route('/review/<int:review_id>')
