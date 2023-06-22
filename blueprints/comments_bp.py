@@ -69,3 +69,15 @@ def update_comment(comment_id):
         return {'error': 'comment not found'}, 404 
 
 # Delete a comment - only the owner or admin can do this 
+@comments_bp.route('/<int:comment_id>', methods=['DELETE'])
+@jwt_required()
+def delete_comment(comment_id):
+    stmt = db.select(Comment).filter_by(id=comment_id)
+    comment = db.session.scalar(stmt)
+    if comment:
+        admin_or_owner_required(comment.user_id)
+        db.session.delete(comment)
+        db.session.commit()
+        return {'message': 'Comment deleted'}, 200
+    else:
+        return {'error': 'Comment not found'}, 404
