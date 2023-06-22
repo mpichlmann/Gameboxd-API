@@ -10,3 +10,16 @@ def all_users():
     stmt = db.select(User).order_by(User.id)
     games = db.session.scalars(stmt).all()
     return UserSchema(many=True).dump(games)
+
+
+# Update a user - change name, email, or password 
+
+
+# Update a user - make admin - only admins can do this 
+
+
+# Delete a user 
+
+
+
+

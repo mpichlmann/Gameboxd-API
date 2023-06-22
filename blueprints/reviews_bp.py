@@ -9,14 +9,14 @@ from blueprints.auth_bp import admin_or_owner_required
 
 reviews_bp = Blueprint('reviews', __name__, url_prefix='/reviews')
 
-# Get all reviews of all games
+# Get all reviews of all games - no login required
 @reviews_bp.route('/')
 def all_reviews():
     stmt = db.select(Review).order_by(Review.id)
     games = db.session.scalars(stmt).all()
     return ReviewSchema(many=True).dump(games)
 
-# #Get all reviews for a specific game
+# #Get all reviews for a specific game - no login required
 @reviews_bp.route('/game/<int:game_id>')
 def get_reviews_by_game(game_id):
     game = Game.query.get(game_id)
@@ -30,8 +30,10 @@ def get_reviews_by_game(game_id):
     else:
         return {'error': 'Game not found.'}, 404
     
+# Get all reviews from a specific user 
+    
    
-# Add a review
+# Add a review - must be logged in to do this 
 @reviews_bp.route('/', methods=['POST'])
 @jwt_required()
 def add_review():
@@ -53,10 +55,10 @@ def add_review():
     except KeyError:
         return {'error':'please provide all details of the review'}, 400
     
-# Update a review
+# Update a review - only the review owner or an admin can do this 
 @reviews_bp.route('/<int:review_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
-def update_game(review_id):
+def update_review(review_id):
     stmt = db.select(Review).filter_by(id=review_id)
     review = db.session.scalar(stmt)
     review_info = ReviewSchema().load(request.json)
@@ -70,7 +72,7 @@ def update_game(review_id):
     else: 
         return {'error': 'review not found'}, 404
     
-# Delete a review 
+# Delete a review - only the review owner or an admin can do this 
 @reviews_bp.route('/<int:review_id>', methods=['DELETE'])
 @jwt_required()
 def delete_review(review_id):

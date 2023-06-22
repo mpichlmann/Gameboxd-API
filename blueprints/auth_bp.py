@@ -7,7 +7,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity
 
 auth_bp = Blueprint('auth', __name__)
 
-
+# Create a new user 
 @auth_bp.route('/register', methods=['POST'])
 def register():
     try:
@@ -22,7 +22,8 @@ def register():
         return UserSchema(exclude=['password']).dump(user), 201
     except IntegrityError:
         return {'error': 'Email address already in use'}, 409
-    
+
+# Log in as a user
 @auth_bp.route('/login', methods=['POST'])
 def login():
     try:

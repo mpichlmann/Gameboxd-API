@@ -18,3 +18,4 @@ class CommentSchema(ma.Schema):
 
     class Meta:
         fields = ('id', 'body', 'date_created', 'user_id', 'review_id', 'review')
+        ordered = True
