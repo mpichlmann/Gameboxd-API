@@ -21,17 +21,23 @@ def seed_db():
     #Seed Games
     games = [
         Game(
+            title = 'Elden Ring',
+            genre = 'RPG',
+            description = 'Explore an open world, become Elden Lord and unite the Elden Ring!',
+            platforms = 'Playstation, Xbox, PC'
+        ),
+        Game(
             title = 'Resident Evil 4 Remake',
             genre = 'Horror',
             description = 'Survive monsters and horrors, and stop an evil plot',
             platforms = 'Playstation, Xbox, PC'
         ),
         Game(
-            title = 'Elden Ring',
-            genre = 'RPG',
-            description = 'Explore an open world, become Elden Lord and unite the Elden Ring!',
-            platforms = 'Playstation, Xbox, PC'
-        ),
+            title = 'Luigis Mansion 3',
+            genre = 'Action-Adventure',
+            description = 'Clean up the ghosts with your buddy Gooigi and save Mario in a haunted hotel',
+            platforms = 'Nintendo Switch'
+        )
     ]
     db.session.query(Game).delete()
     db.session.add_all(games)
@@ -78,6 +84,14 @@ def seed_db():
             date_created = date.today(),
             user_id = users[1].id,
             game_id = games[1].id           
+        ),
+        Review(
+            title = 'Easily my favourite game on the switch',
+            rating = 5,
+            body = 'The best game on the Switch by far. Great atomsphere, story, and level design. This game suprises you and has a lot of variety. It is a near perfect game and my all time favourite, but my only crtiscm is that there is a lot of currency in the game but almost nothing to spend it on. Some cute outfits for myself and Gooigi would have been cool. Other than that, this game is the best. Highly reccomend, must have for the switch.',
+            date_created = date.today(),
+            user_id = users[2].id,
+            game_id = games[2].id           
         ),
     ]
     db.session.query(Review).delete()

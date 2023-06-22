@@ -1,4 +1,5 @@
 from init import db, ma 
+from marshmallow import fields
 
 # REVIEW MODEL 
 class Review(db.Model):
@@ -12,8 +13,10 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
 
-    
+    user = db.relationship('User', back_populates='reviews')
 
 class ReviewSchema(ma.Schema):
+    user = fields.Nested('UserSchema', exclude=['password'])
+
     class Meta:
-        fields = ('id', 'title', 'rating', 'body', 'date_created', 'user_id', 'game_id')
+        fields = ('id', 'title', 'rating', 'body', 'date_created', 'user', 'game_id')

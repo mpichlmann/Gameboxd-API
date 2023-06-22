@@ -63,7 +63,7 @@ def update_game(game_id):
     else: 
         return {'error': 'review not found'}, 404
     
-# Delete a game
+# Delete a game - unlikely in a real world scenario but still essential functionality to have
 @games_bp.route('/<int:game_id>', methods=['DELETE'])
 @jwt_required()
 def delete_game(game_id):
