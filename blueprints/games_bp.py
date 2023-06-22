@@ -14,6 +14,16 @@ def all_games():
     games = db.session.scalars(stmt).all()
     return GameSchema(many=True).dump(games)
 
+# Retrieve one game 
+@games_bp.route('/<int:game_id>')
+def one_game(game_id):
+    stmt = db.select(Game).filter_by(id=game_id)
+    game = db.session.scalar(stmt)
+    if game: 
+        return GameSchema().dump(game)
+    else:
+        return {'error':'Game not found'}, 404
+
 # Adds a new game for reviewing - only admins can do this
 @games_bp.route('/', methods=['POST'])
 @jwt_required()
