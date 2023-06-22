@@ -2,6 +2,7 @@ from init import db
 from flask import Blueprint, request, jsonify
 from models.review import Review, ReviewSchema
 from models.game import Game, GameSchema
+from models.user import User, UserSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from datetime import date
@@ -19,10 +20,10 @@ def all_reviews():
 # Get a specific review 
 @reviews_bp.route('/<int:review_id>')
 def one_game(review_id):
-    stmt = db.select(Game).filter_by(id=review_id)
+    stmt = db.select(Review).filter_by(id=review_id)
     review = db.session.scalar(stmt)
     if review: 
-        return GameSchema().dump(review)
+        return ReviewSchema().dump(review)
     else:
         return {'error':'Game not found'}, 404
 
@@ -41,8 +42,21 @@ def get_reviews_by_game(game_id):
         return {'error': 'Game not found.'}, 404
     
 # Get all reviews from a specific user 
-    
-   
+@reviews_bp.route('/user/<int:user_id>')
+def get_reviews_by_user(user_id):
+    user = User.query.get(user_id)
+    if user: 
+        reviews = Review.query.filter_by(user_id=user_id).all()
+        if reviews:
+            review_schema = ReviewSchema(many=True)
+            return review_schema.dump(reviews)
+        else:
+            return {'error': 'No reviews found for the specified user ID.'}, 404
+    else:
+        return {'error': 'User not found.'}, 404
+
+
+
 # Add a review - must be logged in to do this 
 @reviews_bp.route('/', methods=['POST'])
 @jwt_required()
