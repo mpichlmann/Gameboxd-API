@@ -16,6 +16,16 @@ def all_reviews():
     games = db.session.scalars(stmt).all()
     return ReviewSchema(many=True).dump(games)
 
+# Get a specific review 
+@reviews_bp.route('/<int:review_id>')
+def one_game(review_id):
+    stmt = db.select(Game).filter_by(id=review_id)
+    review = db.session.scalar(stmt)
+    if review: 
+        return GameSchema().dump(review)
+    else:
+        return {'error':'Game not found'}, 404
+
 # #Get all reviews for a specific game - no login required
 @reviews_bp.route('/game/<int:game_id>')
 def get_reviews_by_game(game_id):
@@ -70,7 +80,7 @@ def update_review(review_id):
         db.session.commit()
         return ReviewSchema().dump(review)
     else: 
-        return {'error': 'review not found'}, 404
+        return {'error': 'Review not found'}, 404
     
 # Delete a review - only the review owner or an admin can do this 
 @reviews_bp.route('/<int:review_id>', methods=['DELETE'])
@@ -84,4 +94,4 @@ def delete_review(review_id):
         db.session.commit()
         return {'message':'Review deleted'}, 200
     else: 
-        return {'error': 'review not found'}, 404
+        return {'error': 'Review not found'}, 404

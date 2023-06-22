@@ -2,6 +2,7 @@ from init import db
 from flask import Blueprint, request
 from models.comment import Comment, CommentSchema
 from models.review import Review, ReviewSchema
+from models.user import User, UserSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from datetime import date
 from sqlalchemy.exc import IntegrityError
@@ -18,6 +19,17 @@ def all_comments():
 
 # Retrieve all comments by a specifc user
 @comments_bp.route('/user/<int:user_id>')
+def get_comments_by_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        comments = Comment.query.filter_by(user_id=user_id).all()
+        if comments:
+            comment_schema = CommentSchema(many=True)
+            return comment_schema.dump(comments)
+        else: return {'error': 'No comments from that user were found.'}, 404
+    else:
+        return {'error': 'User not found.'}, 404
+
 
 
 # Retrieve all comments for a specific review 
@@ -68,7 +80,7 @@ def update_comment(comment_id):
         db.session.commit()
         return ReviewSchema().dump(comment)
     else: 
-        return {'error': 'comment not found'}, 404 
+        return {'error': 'Comment not found'}, 404 
 
 # Delete a comment - only the owner or admin can do this 
 @comments_bp.route('/<int:comment_id>', methods=['DELETE'])
