@@ -16,7 +16,7 @@ class Review(db.Model):
     user = db.relationship('User', back_populates='reviews')
 
 class ReviewSchema(ma.Schema):
-    user = fields.Nested('UserSchema', exclude=['password'])
+    user = fields.Nested('UserSchema', exclude=['password', 'reviews'])
 
     class Meta:
         fields = ('id', 'title', 'rating', 'body', 'date_created', 'user', 'game_id')

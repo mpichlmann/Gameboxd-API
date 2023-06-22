@@ -17,6 +17,7 @@ def all_reviews():
 
 #Get all Reviews for a specific game
 
+
 # Add a review
 @reviews_bp.route('/', methods=['POST'])
 @jwt_required()
