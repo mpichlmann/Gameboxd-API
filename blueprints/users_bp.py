@@ -2,7 +2,7 @@ from init import db
 from flask import Blueprint, request
 from models.user import User, UserSchema
 from flask_jwt_extended import jwt_required
-from blueprints.auth_bp import admin_required
+from blueprints.auth_bp import admin_required, admin_or_owner_required
 
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 
@@ -14,11 +14,24 @@ def all_users():
     return UserSchema(many=True).dump(games)
 
 
-# Update a user - change name, email, or password 
-
+# Update a user - change name, email, or password  
+@users_bp.route('/<int:user_id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        admin_or_owner_required(user_id) 
+        user_info = UserSchema().load(request.json, partial=True)
+        user.name = user_info.get('name', user.name)
+        user.email = user_info.get('email', user.email)
+        user.password = user_info.get('password', user.password)
+        db.session.commit()
+        return UserSchema().dump(user)
+    else:
+        return {'error': 'User not found'}, 404
 
 # Update a user - make admin - only admins can do this 
-@users_bp.route('/<int:user_id>', methods=['PUT', 'PATCH'])
+@users_bp.route('/make_admin/<int:user_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def make_admin(user_id):
     user = User.query.get(user_id)
@@ -30,7 +43,8 @@ def make_admin(user_id):
     else:
         return {'error': 'User not found'}, 404
 
-# Delete a user 
+# Delete a user
+@users_bp
 
 
 
