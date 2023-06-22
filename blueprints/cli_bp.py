@@ -103,10 +103,14 @@ def seed_db():
         Comment(
         body = 'I agree, elden ring is a fantastic game',
         date_created = date.today(),
+        user_id = users[1].id,
+        review_id = reviews[0].id
         ),
         Comment(
         body = 'I disagree, I think RE4 is a fantastic modern remake',
         date_created = date.today(),
+        user_id = users[0].id,
+        review_id = reviews[1].id
         )
     ]
     db.session.query(Comment).delete()
