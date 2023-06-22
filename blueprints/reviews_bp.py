@@ -1,6 +1,7 @@
 from init import db
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from models.review import Review, ReviewSchema
+from models.game import Game, GameSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from datetime import date
@@ -15,9 +16,23 @@ def all_reviews():
     games = db.session.scalars(stmt).all()
     return ReviewSchema(many=True).dump(games)
 
-#Get all Reviews for a specific game
+# #Get all reviews for a specific game
+@reviews_bp.route('/game/<int:game_id>')
+def get_reviews_by_game(game_id):
+    game = Game.query.get(game_id)
+    if game:
+        reviews = Review.query.filter_by(game_id=game_id).all()
+        if reviews:
+            review_schema = ReviewSchema(many=True)
+            return review_schema.dump(reviews)
+        else:
+            return jsonify({'message': 'No reviews found for the specified game ID.'}), 404
+    else:
+        return jsonify({'message': 'Game not found.'}), 404
+    
 
 
+    
 # Add a review
 @reviews_bp.route('/', methods=['POST'])
 @jwt_required()
