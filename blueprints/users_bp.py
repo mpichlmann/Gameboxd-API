@@ -11,7 +11,7 @@ users_bp = Blueprint('users', __name__, url_prefix='/users')
 def all_users():
     stmt = db.select(User).order_by(User.id)
     users = db.session.scalars(stmt).all()
-    return UserSchema(many=True).dump(users)
+    return UserSchema(many=True, exclude=['password', 'reviews']).dump(users)
 
 # Get a specific user 
 @users_bp.route('/<int:user_id>')
@@ -19,7 +19,7 @@ def one_user(user_id):
     stmt = db.select(User).filter_by(id=user_id)
     user = db.session.scalar(stmt)
     if user: 
-        return UserSchema().dump(user)
+        return UserSchema(exclude=['password', 'reviews']).dump(user)
     else:
         return {'error':'User not found'}, 404
 
@@ -35,7 +35,7 @@ def update_user(user_id):
         user.email = user_info.get('email', user.email)
         user.password = user_info.get('password', user.password)
         db.session.commit()
-        return UserSchema().dump(user)
+        return UserSchema(exclude=['password', 'reviews']).dump(user)
     else:
         return {'error': 'User not found'}, 404
 

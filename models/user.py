@@ -8,7 +8,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False, dump_only=True)
+    password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
     reviews = db.relationship('Review', back_populates='user', cascade='all, delete')

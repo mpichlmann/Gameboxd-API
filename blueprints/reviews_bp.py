@@ -83,16 +83,15 @@ def add_review():
 @reviews_bp.route('/<int:review_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_review(review_id):
-    stmt = db.select(Review).filter_by(id=review_id)
-    review = db.session.scalar(stmt)
-    review_info = ReviewSchema().load(request.json)
+    review = Review.query.get(review_id)
     if review:
         admin_or_owner_required(review.user_id)
-        review.title = review_info.get('title', review.title),
-        review.rating = review_info.get('rating', review.rating),
-        review.body = review_info.get('body', review.body),
+        review_info = ReviewSchema().load(request.json, partial=True)
+        review.title = review_info.get('title', review.title)
+        review.rating = review_info.get('rating', review.rating)
+        review.body = review_info.get('body', review.body)
         db.session.commit()
-        return ReviewSchema().dump(review)
+        return ReviewSchema(exclude=['user','comments']).dump(review)
     else: 
         return {'error': 'Review not found'}, 404
     

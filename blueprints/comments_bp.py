@@ -68,12 +68,11 @@ def add_comment():
 @comments_bp.route('/<int:comment_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_comment(comment_id):
-    stmt = db.select(Comment).filter_by(id=comment_id)
-    comment = db.session.scalar(stmt)
-    comment_info = CommentSchema().load(request.json)
+    comment = Comment.query.get(comment_id)
     if comment:
         admin_or_owner_required(comment.user_id)
-        comment.body = comment_info.get('body', comment.body),
+        comment_info = CommentSchema().load(request.json, partial=True)
+        comment.body = comment_info.get('body', comment.body)
         db.session.commit()
         return ReviewSchema().dump(comment)
     else: 
