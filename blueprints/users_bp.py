@@ -13,6 +13,15 @@ def all_users():
     games = db.session.scalars(stmt).all()
     return UserSchema(many=True).dump(games)
 
+# Get a specific user 
+@users_bp.route('/<int:user_id>')
+def one_user(user_id):
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user: 
+        return UserSchema().dump(user)
+    else:
+        return {'error':'User not found'}, 404
 
 # Update a user - change name, email, or password  
 @users_bp.route('/<int:user_id>', methods=['PUT', 'PATCH'])
