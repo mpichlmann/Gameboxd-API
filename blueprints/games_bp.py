@@ -49,11 +49,10 @@ def add_game():
 @games_bp.route('/<int:game_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_game(game_id):
-    stmt = db.select(Game).filter_by(id=game_id)
-    game = db.session.scalar(stmt)
-    game_info = GameSchema().load(request.json)
+    game = Game.query.get(game_id)
     if game:
         admin_required()
+        game_info = GameSchema().load(request.json, partial=True)
         game.title = game_info.get('title', game.title),
         game.genre = game_info.get('genre', game.genre),
         game.description = game_info.get('description', game.description),
