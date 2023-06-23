@@ -1,5 +1,6 @@
 from init import db, ma
-from marshmallow import fields 
+from marshmallow import fields
+from marshmallow.validate import Length
 
 # USER MODEL 
 class User(db.Model):
@@ -15,7 +16,7 @@ class User(db.Model):
 class UserSchema(ma.Schema):
     name = fields.String(required=True)
     email = fields.String(required=True)
-    password = fields.String(required=True)
+    password = fields.String(required=True, validate=Length(min=8))
 
     reviews = fields.List(fields.Nested('ReviewSchema', exclude=['user']))
 

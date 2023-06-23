@@ -14,6 +14,9 @@ class Comment(db.Model):
     review = db.relationship('Review', back_populates='comments')
 
 class CommentSchema(ma.Schema):
+    body = fields.String(required=True)
+    review_id = fields.Integer(required=True)
+
     review = fields.Nested('ReviewSchema', only=['id', 'title'])
 
     class Meta:

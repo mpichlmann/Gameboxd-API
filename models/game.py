@@ -12,7 +12,7 @@ class Game(db.Model):
     platforms = db.Column(db.String(100))
 
 class GameSchema(ma.Schema):
-    title = fields.String(required=True, validate=Length(min=3))
+    title = fields.String(required=True, validate=Length(min=1))
     genre = fields.String(required=True)
     description = fields.String(required=True)
     platforms = fields.String(required=True)

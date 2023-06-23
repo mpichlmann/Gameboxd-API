@@ -17,8 +17,6 @@ def all_comments():
     comments = db.session.scalars(stmt).all()
     return CommentSchema(many=True).dump(comments)
 
-
-
 # Retrieve all comments by a specifc user
 @comments_bp.route('/user/<int:user_id>')
 def get_comments_by_user(user_id):
@@ -31,8 +29,6 @@ def get_comments_by_user(user_id):
         else: return {'error': 'No comments from that user were found.'}, 404
     else:
         return {'error': 'User not found.'}, 404
-
-
 
 # Retrieve all comments for a specific review 
 @comments_bp.route('/review/<int:review_id>')
@@ -47,7 +43,6 @@ def get_comments_by_review(review_id):
             return {'error': 'No comments for the specified review ID'}, 404
     else:
         return {'error': 'Review not found'}, 404
-
 
 # Create a new comment 
 @comments_bp.route('/', methods=['POST'])
