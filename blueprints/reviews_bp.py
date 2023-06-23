@@ -19,13 +19,13 @@ def all_reviews():
 
 # Get a specific review 
 @reviews_bp.route('/<int:review_id>')
-def one_game(review_id):
+def one_review(review_id):
     stmt = db.select(Review).filter_by(id=review_id)
     review = db.session.scalar(stmt)
     if review: 
         return ReviewSchema().dump(review)
     else:
-        return {'error':'Game not found'}, 404
+        return {'error':'Review not found'}, 404
 
 # #Get all reviews for a specific game - no login required
 @reviews_bp.route('/game/<int:game_id>')

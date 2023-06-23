@@ -6,12 +6,12 @@ from blueprints.auth_bp import admin_required, admin_or_owner_required
 
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 
-
+# Get all users
 @users_bp.route('/')
 def all_users():
     stmt = db.select(User).order_by(User.id)
-    games = db.session.scalars(stmt).all()
-    return UserSchema(many=True).dump(games)
+    users = db.session.scalars(stmt).all()
+    return UserSchema(many=True).dump(users)
 
 # Get a specific user 
 @users_bp.route('/<int:user_id>')

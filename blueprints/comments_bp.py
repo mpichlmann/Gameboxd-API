@@ -14,8 +14,10 @@ comments_bp = Blueprint('comments', __name__, url_prefix='/comments')
 @comments_bp.route('/')
 def all_comments():
     stmt = db.select(Comment).order_by(Comment.id)
-    games = db.session.scalars(stmt).all()
-    return CommentSchema(many=True).dump(games)
+    comments = db.session.scalars(stmt).all()
+    return CommentSchema(many=True).dump(comments)
+
+
 
 # Retrieve all comments by a specifc user
 @comments_bp.route('/user/<int:user_id>')

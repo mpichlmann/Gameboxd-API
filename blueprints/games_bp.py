@@ -73,6 +73,6 @@ def delete_game(game_id):
         admin_required()
         db.session.delete(game)
         db.session.commit()
-        return {}, 200
+        return {'message': 'game deleted'}, 200
     else: 
-        return {'error': 'review not found'}, 404
+        return {'error': 'game not found'}, 404
