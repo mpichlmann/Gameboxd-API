@@ -61,7 +61,17 @@ def seed_db():
             email = 'queenboo@mansion.com',
             password = bcrypt.generate_password_hash('scaryboo').decode('utf-8'),
             is_admin = True,
-        )
+        ),
+        User(
+            name = 'Post Man',
+            email = 'postman@post.com',
+            password = bcrypt.generate_password_hash('postmanpass').decode('utf-8')
+        ),
+        User(
+            name = 'Mario Brutha',
+            email = 'mushroom@kingdom.com',
+            password = bcrypt.generate_password_hash('princesspeach').decode('utf-8')
+        ),
     ]
     db.session.query(User).delete()
     db.session.add_all(users)
@@ -86,12 +96,28 @@ def seed_db():
             game_id = games[1].id           
         ),
         Review(
+            title = 'not the high water mark for FromSoftware',
+            rating = 5,
+            body = 'Elden ring is nowhere near as good as FromSoftwares other games, Sekiro has the better combat and dark souls has the better atmosphere 100%',
+            date_created = date.today(),
+            user_id = users[2].id,
+            game_id = games[0].id           
+        ),
+        Review(
             title = 'Easily my favourite game on the switch',
             rating = 5,
             body = 'The best game on the Switch by far. Great atomsphere, story, and level design. This game suprises you and has a lot of variety. It is a near perfect game and my all time favourite, but my only crtiscm is that there is a lot of currency in the game but almost nothing to spend it on. Some cute outfits for myself and Gooigi would have been cool. Other than that, this game is the best. Highly reccomend, must have for the switch.',
             date_created = date.today(),
             user_id = users[2].id,
             game_id = games[2].id           
+        ),
+        Review(
+            title = 'A modern masterpiece',
+            rating = 5,
+            body = 'Capcom has done it again. Following the success of their remasters of Resident Evil 2 and Resident Evil 3, this latest release is nothing short of perfection. Resident Evil 4 is loving remastered for modern audiences. The game has been tailored to perfection.',
+            date_created = date.today(),
+            user_id = users[3].id,
+            game_id = games[1].id           
         ),
     ]
     db.session.query(Review).delete()
@@ -111,6 +137,39 @@ def seed_db():
         date_created = date.today(),
         user_id = users[0].id,
         review_id = reviews[1].id
+        ),
+        Comment(
+        body = 'Maybe you should get good? Elden Ring is game of the year',
+        date_created = date.today(),
+        user_id = users[3].id,
+        review_id = reviews[2].id
+        ),
+        Comment(
+        body = 'I also love Luigis Mansion 3, best game ever!',
+        date_created = date.today(),
+        user_id = users[0].id,
+        review_id = reviews[3].id
+        )
+        ,
+        Comment(
+        body = 'Resident evil 4 sucks, the original is way better',
+        date_created = date.today(),
+        user_id = users[4].id,
+        review_id = reviews[4].id
+        )
+        ,
+        Comment(
+        body = 'I LOVE LUIGI!!!',
+        date_created = date.today(),
+        user_id = users[0].id,
+        review_id = reviews[3].id
+        )
+        ,
+        Comment(
+        body = 'I think you are missing what makes Elden Ring such an impressive game. The sheer scale and diversity of the world is something to be awed by.',
+        date_created = date.today(),
+        user_id = users[0].id,
+        review_id = reviews[2].id
         )
     ]
     db.session.query(Comment).delete()
