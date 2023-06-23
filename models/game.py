@@ -1,4 +1,6 @@
-from init import db, ma 
+from init import db, ma
+from marshmallow import fields
+from marshmallow.validate import Length, And, Regexp
 
 # GAMES MODEL
 class Game(db.Model):
@@ -10,5 +12,10 @@ class Game(db.Model):
     platforms = db.Column(db.String(100))
 
 class GameSchema(ma.Schema):
+    title = fields.String(required=True, validate=Length(min=3))
+    genre = fields.String(required=True)
+    description = fields.String(required=True)
+    platforms = fields.String(required=True)
+
     class Meta:
         fields = ('id', 'title', 'genre', 'description', 'platforms')

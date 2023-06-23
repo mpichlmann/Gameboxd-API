@@ -8,6 +8,7 @@ from blueprints.reviews_bp import reviews_bp
 from blueprints.users_bp import users_bp
 from blueprints.comments_bp import comments_bp
 from init import db, ma, bcrypt, jwt
+from marshmallow.exceptions import ValidationError
 
 # Configuration and Instances 
 def setup():
@@ -20,6 +21,15 @@ def setup():
     ma.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+
+    @app.errorhandler(ValidationError)
+    def validation_error(err):
+        return {'error': err.messages}, 400
+    
+    app.errorhandler(ValueError)
+    def value_error(err):
+        return {'error': err.messages}, 400
+
 
     app.register_blueprint(cli_bp)
     app.register_blueprint(auth_bp)

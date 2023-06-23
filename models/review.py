@@ -14,10 +14,14 @@ class Review(db.Model):
     game_id = db.Column(db.Integer, db.ForeignKey('games.id', ondelete='CASCADE'), nullable=False)
 
     user = db.relationship('User', back_populates='reviews')
-
     comments = db.relationship('Comment', back_populates='review', cascade='all, delete')
 
 class ReviewSchema(ma.Schema):
+    title = fields.String(required=True)
+    rating = fields.Integer(required=True)
+    body = fields.String(required=True)
+    game_id = fields.Integer(required=True)
+
     user = fields.Nested('UserSchema', exclude=['reviews', 'password'])
     comments = fields.Nested('CommentSchema', only=['body', 'user_id'], many=True) 
 
