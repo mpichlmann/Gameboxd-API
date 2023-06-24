@@ -17,7 +17,6 @@ def create_db():
 
 @cli_bp.cli.command('seed')
 def seed_db():
-
     #Seed Games
     games = [
         Game(
@@ -96,7 +95,7 @@ def seed_db():
             game_id = games[1].id           
         ),
         Review(
-            title = 'not the high water mark for FromSoftware',
+            title = 'Not the high water mark for FromSoftware',
             rating = 5,
             body = 'Elden ring is nowhere near as good as FromSoftwares other games, Sekiro has the better combat and dark souls has the better atmosphere 100%',
             date_created = date.today(),
