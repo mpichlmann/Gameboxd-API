@@ -11,14 +11,14 @@ from blueprints.auth_bp import admin_or_owner_required
 reviews_bp = Blueprint('reviews', __name__, url_prefix='/reviews')
 
 # Get all reviews of all games - no login required
-@reviews_bp.route('/')
+@reviews_bp.route('/', methods=['GET'])
 def all_reviews():
     stmt = db.select(Review).order_by(Review.id) # Builds query to retrieve all reviews
     games = db.session.scalars(stmt).all() # Executes query with scalars and all to get all reviews
     return ReviewSchema(many=True).dump(games) # Returns all reviews with many=True as there will be more than one review
 
 # Get a specific review - no login required
-@reviews_bp.route('/<int:review_id>')
+@reviews_bp.route('/<int:review_id>', methods=['GET'])
 def one_review(review_id):
     stmt = db.select(Review).filter_by(id=review_id) # Builds a query to get a review with an id that matches the id that was passed in
     review = db.session.scalar(stmt) # Executes the statement with scalar singular as there will only be one review
@@ -28,7 +28,7 @@ def one_review(review_id):
         return {'error':'Review not found'}, 404 # If review is not truthy (it does not exist) then return a corresponding error message
 
 # #Get all reviews for a specific game - no login required
-@reviews_bp.route('/game/<int:game_id>')
+@reviews_bp.route('/game/<int:game_id>', methods=['GET'])
 def get_reviews_by_game(game_id):
     game = Game.query.get(game_id) # Query Games for a game with a matching id to the id that was passed in
     if game: # If game is truthy (it exists and the id matches) then continue the request
@@ -42,7 +42,7 @@ def get_reviews_by_game(game_id):
         return {'error': 'Game not found.'}, 404 # If game is not truthy (no such game with the specified id exists) return a corresponding error message
     
 # Get all reviews from a specific user - no login required
-@reviews_bp.route('/user/<int:user_id>')
+@reviews_bp.route('/user/<int:user_id>', methods=['GET'])
 def get_reviews_by_user(user_id):
     user = User.query.get(user_id) # Query Users for a user with a matching id to the id that was passed in
     if user: # If user is truthy (it exists and the id matches) then continue the request

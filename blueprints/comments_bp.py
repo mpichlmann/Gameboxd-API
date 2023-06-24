@@ -11,14 +11,14 @@ from blueprints.auth_bp import admin_or_owner_required
 comments_bp = Blueprint('comments', __name__, url_prefix='/comments')
 
 # Retrieve all comments for all reviews 
-@comments_bp.route('/')
+@comments_bp.route('/', methods=['GET'])
 def all_comments(): 
     stmt = db.select(Comment).order_by(Comment.id) # builds a query to get all comments
     comments = db.session.scalars(stmt).all() # executes the query using scalars and .all() as there will be more than one comment
     return CommentSchema(many=True).dump(comments) # returns the comment schema for all comments with many = True
 
 # Retrieve all comments by a specifc user
-@comments_bp.route('/user/<int:user_id>')
+@comments_bp.route('/user/<int:user_id>', methods=['GET'])
 def get_comments_by_user(user_id):
     user = User.query.get(user_id) # queries the Users for a matching id to the id that has been passed into the function from the route
     if user: # If user is truthy (if a user with an id that matches exists)
@@ -31,7 +31,7 @@ def get_comments_by_user(user_id):
         return {'error': 'User not found.'}, 404 # if user is not truthy (no user with that id exists) return a corresponding error
 
 # Retrieve all comments for a specific review 
-@comments_bp.route('/review/<int:review_id>')
+@comments_bp.route('/review/<int:review_id>', methods=['GET'])
 def get_comments_by_review(review_id):
     review = Review.query.get(review_id) # Queries the Reviews based on the ID that has been passed in
     if review: # If the review is truthy (it exists) retrieve all comments associated with it

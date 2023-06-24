@@ -7,14 +7,14 @@ from blueprints.auth_bp import admin_required, admin_or_owner_required
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 
 # Get all users 
-@users_bp.route('/')
+@users_bp.route('/', methods=['GET'])
 def all_users():
     stmt = db.select(User).order_by(User.id) # Prepares the query to retrieve all users 
     users = db.session.scalars(stmt).all() # Executes the query 
     return UserSchema(many=True, exclude=['password', 'reviews']).dump(users) # Returns all users excluding passwords, and their reviews for security and clarity
 
 # Get a specific user 
-@users_bp.route('/<int:user_id>')
+@users_bp.route('/<int:user_id>', methods=['GET'])
 def one_user(user_id):
     stmt = db.select(User).filter_by(id=user_id) # Prepares the query to get a user with an id that matches the id that was passed in
     user = db.session.scalar(stmt) # Executes the query

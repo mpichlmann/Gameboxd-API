@@ -15,7 +15,7 @@ def all_games():
     return GameSchema(many=True).dump(games) # Returns all games with many=True as there will be more than one game 
 
 # Retrieve one game 
-@games_bp.route('/<int:game_id>')
+@games_bp.route('/<int:game_id>', methods=['GET'])
 def one_game(game_id):
     stmt = db.select(Game).filter_by(id=game_id) # Builds a query to get a game with an id that matches the id that has been passed in
     game = db.session.scalar(stmt) # Executes the query with scalar singular as there will only be one game

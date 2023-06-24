@@ -30,7 +30,6 @@ def setup():
     def value_error(err):
         return {'error': err.messages}, 400
 
-
     app.register_blueprint(cli_bp)
     app.register_blueprint(auth_bp)
 
@@ -38,10 +37,6 @@ def setup():
     app.register_blueprint(reviews_bp)
     app.register_blueprint(comments_bp)
     app.register_blueprint(users_bp)
-
-    @app.route('/')
-    def hello():
-        return 'HELLO WORLD'
 
     return app
 
