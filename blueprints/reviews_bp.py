@@ -14,8 +14,8 @@ reviews_bp = Blueprint('reviews', __name__, url_prefix='/reviews')
 @reviews_bp.route('/', methods=['GET'])
 def all_reviews():
     stmt = db.select(Review).order_by(Review.id) # Builds query to retrieve all reviews
-    games = db.session.scalars(stmt).all() # Executes query with scalars and all to get all reviews
-    return ReviewSchema(many=True).dump(games) # Returns all reviews with many=True as there will be more than one review
+    reviews = db.session.scalars(stmt).all() # Executes query with scalars and all to get all reviews
+    return ReviewSchema(many=True).dump(reviews) # Returns all reviews with many=True as there will be more than one review
 
 # Get a specific review - no login required
 @reviews_bp.route('/<int:review_id>', methods=['GET'])
@@ -73,7 +73,7 @@ def add_review():
         db.session.commit()
         return ReviewSchema().dump(review), 201 # Return the freshly created review
     except IntegrityError:
-        return {'error': 'Review already exists'}, 409 
+        return {'error': 'Game not found'}, 409 
     except KeyError:
         return {'error':'please provide all details of the review'}, 400 # If key details of the review are missing from the request return a corresponding error message
     

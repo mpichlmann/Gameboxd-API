@@ -1,5 +1,6 @@
 from init import db, ma 
 from marshmallow import fields
+from marshmallow.validate import Range
 
 # REVIEW MODEL 
 class Review(db.Model):
@@ -18,7 +19,7 @@ class Review(db.Model):
 
 class ReviewSchema(ma.Schema):
     title = fields.String(required=True)
-    rating = fields.Integer(required=True)
+    rating = fields.Integer(required=True, validate=Range(min=0, max=5))
     body = fields.String(required=True)
     game_id = fields.Integer(required=True)
 

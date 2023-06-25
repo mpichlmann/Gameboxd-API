@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from datetime import timedelta
 from flask_jwt_extended import create_access_token, get_jwt_identity
 
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 # Create a new user 
 @auth_bp.route('/register', methods=['POST'])
@@ -22,7 +22,7 @@ def register():
         # Add and commit the new user to the database
         db.session.add(user)
         db.session.commit()
-        return UserSchema(exclude=['password']).dump(user), 201
+        return UserSchema(exclude=['password', 'reviews']).dump(user), 201
     except IntegrityError:
         return {'error': 'Email address already in use'}, 409
 

@@ -36,6 +36,12 @@ def seed_db():
             genre = 'Action-Adventure',
             description = 'Clean up the ghosts with your buddy Gooigi and save Mario in a haunted hotel',
             platforms = 'Nintendo Switch'
+        ),
+        Game(
+            title = 'Overcooked 2',
+            genre = 'Party-Puzzle',
+            description = 'Dish up as fast as you can without getting orders wrong!',
+            platforms = 'PC, Playstation, Xbox, Nintendo Switch'
         )
     ]
     db.session.query(Game).delete()
@@ -71,6 +77,11 @@ def seed_db():
             email = 'mushroom@kingdom.com',
             password = bcrypt.generate_password_hash('princesspeach').decode('utf-8')
         ),
+        User(
+            name = 'Edward Scissorhands',
+            email = 'Burton@Hollywood.com',
+            password = bcrypt.generate_password_hash('HedgeTrimmer').decode('utf-8')
+        ),
     ]
     db.session.query(User).delete()
     db.session.add_all(users)
@@ -96,7 +107,7 @@ def seed_db():
         ),
         Review(
             title = 'Not the high water mark for FromSoftware',
-            rating = 5,
+            rating = 2,
             body = 'Elden ring is nowhere near as good as FromSoftwares other games, Sekiro has the better combat and dark souls has the better atmosphere 100%',
             date_created = date.today(),
             user_id = users[2].id,
@@ -118,6 +129,14 @@ def seed_db():
             user_id = users[3].id,
             game_id = games[1].id           
         ),
+        Review(
+            title = 'I was too scared to finish the game',
+            rating = 4,
+            body = 'As the title says, I found this game way too scary to even finish! The game is good dont get me wrong, in fact it is TOO good!!',
+            date_created = date.today(),
+            user_id = users[4].id,
+            game_id = games[1].id           
+        )
     ]
     db.session.query(Review).delete()
     db.session.add_all(reviews)
@@ -160,7 +179,7 @@ def seed_db():
         Comment(
         body = 'I LOVE LUIGI!!!',
         date_created = date.today(),
-        user_id = users[0].id,
+        user_id = users[4].id,
         review_id = reviews[3].id
         )
         ,
