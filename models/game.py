@@ -7,9 +7,9 @@ class Game(db.Model):
     __tablename__ = 'games'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False, unique=True)
-    genre = db.Column(db.String(100))
-    description = db.Column(db.Text())
-    platforms = db.Column(db.String(100))
+    genre = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text(), nullable=False)
+    platforms = db.Column(db.String(100), nullable=False)
 
 class GameSchema(ma.Schema):
     title = fields.String(required=True, validate=Length(min=1))

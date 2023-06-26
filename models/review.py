@@ -6,9 +6,9 @@ from marshmallow.validate import Range
 class Review(db.Model):
     __tablename__ = 'reviews'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100))
+    title = db.Column(db.String(100), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
-    body = db.Column(db.Text())
+    body = db.Column(db.Text(), nullable=False)
     date_created = db.Column(db.Date())
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
