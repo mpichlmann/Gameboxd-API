@@ -1,18 +1,11 @@
 ## Link to GitHub Repository
 https://github.com/mpichlmann/MaximillianPichlmann_T2A2
 
-## Link to Trello 
+## Link to Trello Workspace
 https://trello.com/b/oRIZpAYq/api
 
 
-## Table of Contents
-[R5 - Endpoint Documentation](##-R5-Endpoint-Documentation)
-
-[R4 - Key functionalities and benefits of an ORM](##-R4-Identify-key-functionalities-and-benefits-of-an-ORM,-provide-a-nuanced-discussion-of-each)
-
-
 ## R0 - Installation and Set Up Instructions
-
 
 Firstly make sure that the postgresql database server is running by opening your terminal and entering the following: 
 
@@ -84,7 +77,7 @@ If IGN reviews a game, then that single review is the only thing IGN has to say 
 Plainly put, there exists no space that offers a community where people can be exposed to a range of opinions on games, connect with each other, contribute their thoughts, and build a following. The following proposed application will aim to rectify this problem. ‘Gameboxd’ is the working title for an API webserver that manages a relational database that will allow users to review games and connect with each other. Gameboxd solves the aforementioned problem by providing a centralised community specifically built for reviewing games, connecting with each other, and being exposed to a range of differing opinions and tastes. 
 
 
-## R3 Why have you chosen this database system. What are the drawbacks compared to others?
+## R3 - Why have you chosen this database system. What are the drawbacks compared to others?
 The chosen database system for this project is PostgreSQL. PostgreSQL has many benefits and was well suited for the current project for a number of reasons. Postgres is an open source project with wide adoption and support, giving it a strong level of maintenance and makes finding solutions to any issues that may arise quick and easy. Postgres is supported on all major operating systems such as Windows, Mac and Linux, which means using it within the current project will allow a wider range of users to be able to enjoy the app. Scalability is another benefit of postgres with the database system being capable of handling up to thousands of terabytes of data, which for use in the proposed app would allow for significantly large amounts of users, games, reviews and comments without running into problems. Postgres also has wide compatibility and can be used with many different programming languages such as JavaScript, C, C++, Ruby, and Python in the current projects case (many other languages can also utilise postgres, these are just a few of the most popular). Reliability and integrity of data is another aspect of postgres that makes it a very good database system, postgres provides ACID (Atomicity, Consistency, Isolation, Durability) compliance guaranteeing transactions are processed with consistency, efficiency and reliability. 
 
 While postgres has many benefits there are a few drawbacks in certain domains when compared to other database systems. Postgres has been reported to use more memory than other database systems, which means that in resource sparse settings it may not be the best choice. Postgres also does not support as many other open-source applications as other projects such as MySQL. Postgres has been considered to have a steeper learning curve than other database systems, both in the initial installation and set-up and in the everyday use, which can be an impediment to some users. There are limited NoSQL functionalities within postgres, which means it may not be as attractive of a choice of database when it comes to working with document-oriented or key-value workloads as some other database systems such as MongoDB. 
@@ -92,7 +85,7 @@ While postgres has many benefits there are a few drawbacks in certain domains wh
 Despite these drawbacks postgres is still a very reliable and powerful relational database management system and is well suited for the current proposed project of an API Webserver designed to allow users to review games and comment on each other’s reviews.
 
 
-## R4 Identify key functionalities and benefits of an ORM, provide a nuanced discussion of each 
+## R4 - Identify key functionalities and benefits of an ORM, provide a nuanced discussion of each 
 An ORM is an object relational mapper, such as SQL Alchemy, that allows developers to forgo using repetitive SQL queries and instead use much simpler and much more efficient standard programming language, such as python. ORMs work together with OOP (object oriented programming) to create higher level representations of databases within objects that can be more easily manipulated. Rather than having to manually input all the necessary SQL commands to create a table, insert data, and then manipulate that data, an ORM such as SQL alchemy allows for a class to be created in python, and for all the aforementioned actions to instead be performed on the class. 
 
 Part of how ORMs work is by using what’s called a session. A session acts like a holding zone for all the queries that have been executed through code. By using a session it allows multiple queries to be stacked on top of each other and executed all at once, or only for certain queries to be executed under certain conditions. Once queries and other commands (such as deleting a table), have been added to the session, the session needs to be committed for the changes to take effect. This compartmentalisation of the database querying process is beneficial as it allows for a greater degree of debugging. Sessions can be tracked and more closely investigated to see what changes were made and when. Sessions can even be rolled back in the case that an unintended change was made to the database. 
@@ -100,7 +93,7 @@ Part of how ORMs work is by using what’s called a session. A session acts like
 Some of the benefits of using an ORM are that it speeds up development time and reduces development costs by providing a much more powerful and much more efficient method of data manipulation. ORMs also provide a much simpler method of handling relationships and associations between the database entities. The mapper provides ways of defining foreign/primary keys and ways of accessing objects through related entities, allowing for very complex queries that involve dependent data to be executed much more elegantly than through straight SQL. ORMs are also intended to create a degree of portability by allowing developers to simply configure the ORM drivers/adapters to work with the database system of choice without the need to adjust any of the main program code. Another benefit of ORMs is that they provide methods for data validation and data sanitisation, by constraining data in this way it helps to add a layer of integrity to the database and prevent unwanted instances of incorrect or incomplete data being referred to. Finally ORMs promote cleaner code practice that as a result allows a greater degree of collaboration and parallel development. 
 
 
-## R5 Endpoint Documentation
+## R5 - Endpoint Documentation
 ## Auth Routes
 
 ## Route: /auth/register 
@@ -694,7 +687,7 @@ Users can create many reviews and many comments, but each review and each commen
 
 Finally the ‘games’ entity will only have a relationship with the ‘reviews’ entity as it is not crucial for users to have ownership over a game or for users to be able to comment on game. As a game can have many reviews but each review will only ever belong to a single game, this means that the ‘games’ entity will be in a one-to-many relationship with the ‘reviews’ entity. These are all the relationships between the entities in the database for the proposed API webserver.
 
-## R10 Describe the way tasks are allocated and tracked in your project 
+## R10 - Describe the way tasks are allocated and tracked in your project 
 To plan and track the progress of this project Trello was used as well as participating in daily stand ups in discord. 
 
 Link to my Trello board: https://trello.com/b/oRIZpAYq/api
