@@ -501,9 +501,3 @@ If a comment exists with a comment_id matching the specified comment_id and the 
 
 ![COMMENT DELETE SUCCESSFUL](https://i.imgur.com/VICkpiv.jpg)
 
-
-
-
-
-
-
