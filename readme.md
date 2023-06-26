@@ -4,7 +4,6 @@ https://github.com/mpichlmann/MaximillianPichlmann_T2A2
 ## Link to Trello Workspace
 https://trello.com/b/oRIZpAYq/api
 
-
 ## R0 - Installation and Set Up Instructions
 
 Firstly make sure that the postgresql database server is running by opening your terminal and entering the following: 
