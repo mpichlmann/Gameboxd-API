@@ -1,4 +1,11 @@
+## Link to GitHub Repository
+https://github.com/mpichlmann/MaximillianPichlmann_T2A2
+
+## Link to Trello 
+https://trello.com/b/oRIZpAYq/api
+
 ## R0 - Installation and Set Up Instructions
+
 
 Firstly make sure that the postgresql database server is running by opening your terminal and entering the following: 
 
@@ -18,25 +25,47 @@ Now create a new database called 'gameboxd' by entering the following:
 ```bash
 create database gameboxd;
 ```
-
-
+From here you will need to connect to the database by entering the following:
 ```bash
-
+\c gameboxd
 ```
-
-
-
+Now that you are connected to the database create a new user for the database by entering the following:
 ```bash
-
+create user gameboxd_dev with password 'adminpass';
 ```
-
-
-
-
-
-
-
-
+Next grant all privileges to this user by entering the following:
+```bash
+grant all privileges on database gameboxd to gameboxd_dev;
+```
+From here you can exit postgresql by entering the following: 
+```bash
+\q
+```
+Now you will need to set up a virtual environment in the current working directory (assuming you are in a directory that you are happy with) by entering the following: 
+```bash
+python3 -m venv venv
+```
+Activate the virtual environment by entering the following: 
+```bash
+source venv/bin/activate
+```
+Next you will need to install all of the dependencies listed in the requirements.txt by entering the following: 
+```bash
+pip install -r requirements.txt
+```
+From here you will now be able to run the following command to create the database table:
+```bash
+flask db create
+```
+To populate the database tables with data: 
+```bash
+flask db seed
+```
+and now finally run the API by entering the following: 
+```bash
+flask run
+```
+Assuming you have followed all of the above steps properly, you will now be able to open Postman and on local port 5000 you will be able to use the full functionality of the API webserver, enjoy! 
 
 ## R1/R2 - Identifcation of problem being solved by this app and why it is a problem
 Currently websites like letterboxd and yelp exist for reviewing movies and restaurants respectively. These websites offer a community unto themselves where users can share their thoughts and assessments, connect with each other, and build a following that respects and looks forward to their future contributions and recommendations. Currently no such equivalent for videogames exist. Videogame reviews certainly exist and videogame critics definitely exist, some very notable, however the problem is that no such platform equivalent to the aforementioned sites exist. 
