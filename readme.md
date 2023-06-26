@@ -57,11 +57,11 @@ From here you will now be able to run the following command to create the databa
 ```bash
 flask db create
 ```
-To populate the database tables with data: 
+To populate the database tables with data enter the following: 
 ```bash
 flask db seed
 ```
-and now finally run the API by entering the following: 
+Finally run the API by entering the following: 
 ```bash
 flask run
 ```
