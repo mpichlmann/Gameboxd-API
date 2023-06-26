@@ -4,6 +4,13 @@ https://github.com/mpichlmann/MaximillianPichlmann_T2A2
 ## Link to Trello 
 https://trello.com/b/oRIZpAYq/api
 
+
+## Table of Contents
+[R5 - Endpoint Documentation](##-R5-Endpoint-Documentation)
+
+[R4 - Key functionalities and benefits of an ORM](##-R4-Identify-key-functionalities-and-benefits-of-an-ORM,-provide-a-nuanced-discussion-of-each)
+
+
 ## R0 - Installation and Set Up Instructions
 
 
@@ -600,7 +607,7 @@ If a comment exists with a comment_id matching the specified comment_id and the 
 
 ## R6 - ERD
 
-![ERD](https://i.imgur.com/VP3gMii.jpg)
+![ERD](https://i.imgur.com/FcqgfWj.jpg)
 
 ## R7 - Third Party Services
 ## PostgreSQL
