@@ -50,7 +50,7 @@ source venv/bin/activate
 ```
 Next you will need to install all of the dependencies listed in the requirements.txt by entering the following: 
 ```bash
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 From here you will now be able to run the following command to create the database table:
 ```bash
@@ -691,12 +691,14 @@ To plan and track the progress of this project Trello was used as well as partic
 
 Link to my Trello board: https://trello.com/b/oRIZpAYq/api
 
-I started by creating three distinct lists on trello: To-Do, In Progress, and Completed, and then populating the To-Do list with as many tasks as I could possibly think of that would be required throughout the completion of the project. Some of the cards that populated the To-Do list were comprised of smaller tasks that could be tackled one at a time until the overall task was completed, checklists were used for tasks such as these, examples below: 
+I started by creating three distinct lists on trello: To-Do, In Progress, and Completed, and then populating the To-Do list with as many tasks as I could possibly think of that would be required throughout the completion of the project. Some of the cards that populated the trello board were comprised of smaller tasks that could be tackled one at a time until the overall task was completed, checklists were used for tasks such as these, examples below: 
 
 ![Documentation](https://i.imgur.com/kk9YABN.jpg)
 ![Build Models](https://i.imgur.com/T0GNcF6.jpg)
 ![Build Clis](https://i.imgur.com/6lgtq9n.jpg)
 ![Build Models](https://i.imgur.com/T0GNcF6.jpg)
+
+Throughout the development of the app 
 
 
 ## Day One
@@ -745,7 +747,7 @@ End of day stand up for day four
 ![stand up four](https://i.imgur.com/IUcSB8g.jpg)
 
 ## Day Five
-By day 5 I had managed to complete all of the neccesary CRUD functionality of the API, implement error handling, authorisation, authentication, and felt confident that everything was working properly. I now needed to go through all of the code and clean it up as best as I could as well as add comments explaining how all of the queries worked and what data they were intended to receive/return. As well as doing this I also decided to make a start on creating the documentation for every endpoint now that all of the endpoints had been created and tested
+By day 5 I had managed to complete all of the neccesary CRUD functionality of the API, implement error handling, authorisation, authentication, and felt confident that everything was working properly. I now needed to go through all of the code and clean it up as best as I could as well as add comments explaining how all of the queries worked and what data they were intended to receive/return. As well as doing this I also decided to make a start on creating the documentation for every endpoint now that all of the endpoints had been created and tested.
 
 Trello after day five 
 
