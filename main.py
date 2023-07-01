@@ -26,9 +26,13 @@ def setup():
     def validation_error(err):
         return {'error': err.messages}, 400
     
-    app.errorhandler(ValueError)
+    @app.errorhandler(ValueError)
     def value_error(err):
         return {'error': err.messages}, 400
+    
+    @app.errorhandler(404)
+    def not_found(err): 
+        return {'error': str(err)}, 404
 
     app.register_blueprint(cli_bp)
     app.register_blueprint(auth_bp)
